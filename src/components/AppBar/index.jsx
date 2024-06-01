@@ -25,7 +25,7 @@ function AppBar() {
         justifyContent: "space-between",
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
         <AppsIcon sx={{ color: "primary.main" }} />
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <SvgIcon
@@ -36,7 +36,7 @@ function AppBar() {
           <Typography
             variant="span"
             sx={{
-              fontSize: "1.2rem",
+              fontSize: "1.4rem",
               fontWeight: "bold",
               color: "primary.main",
             }}
@@ -51,21 +51,22 @@ function AppBar() {
         </Box>
       </Box>
       <Box
-        sx={{ display: "flex", alignItems: "center", color: "primary.main" }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          color: "primary.main",
+          gap: 2,
+        }}
       >
-        <TextField type="search" label={`Search`} size="small"></TextField>
+        <TextField type="search" label="Search" size="small"></TextField>
         <ModeSelect />
         <Tooltip title="Notification">
-          <Badge
-            color="secondary"
-            variant="dot"
-            sx={{ cursor: "pointer", mx: 1.8 }}
-          >
-            <NotificationsNoneIcon />
+          <Badge color="secondary" variant="dot" sx={{ cursor: "pointer" }}>
+            <NotificationsNoneIcon color="primary.main" />
           </Badge>
         </Tooltip>
         <Tooltip title="Help">
-          <HelpOutlineIcon sx={{ cursor: "pointer" }} />
+          <HelpOutlineIcon sx={{ cursor: "pointer", color: "primary.main" }} />
         </Tooltip>
         <Profiles />
       </Box>

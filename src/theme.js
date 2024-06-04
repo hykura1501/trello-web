@@ -4,6 +4,23 @@ import { experimental_extendTheme as extendTheme } from "@mui/material/styles";
 // Create a theme instance.
 const theme = extendTheme({
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          "*::-webkit-scrollbar": {
+            width: "8px",
+            height: "6px",
+          },
+          "*::-webkit-scrollbar-thumb": {
+            backgroundColor: "#4db6ac",
+            borderRadius: "8px",
+          },
+          "*::-webkit-scrollbar-thumb:hover": {
+            backgroundColor: "#ce93d8",
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

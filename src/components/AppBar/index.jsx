@@ -12,10 +12,10 @@ import Profiles from "./Menu/Profiles";
 import { Badge, Button, TextField, Tooltip } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import QueueIcon from '@mui/icons-material/Queue';
 function AppBar() {
   return (
     <Box
-      padding={2}
       sx={{
         width: "100%",
         height: (theme) => theme.trello.appBarHeight,
@@ -25,6 +25,7 @@ function AppBar() {
         justifyContent: "space-between",
         gap: 2,
         overflowX: "auto",
+        padding: 2,
         overflowY: "hidden",
       }}
     >
@@ -46,12 +47,20 @@ function AppBar() {
           >
             Trello
           </Typography>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
+          >
             <Workspaces />
             <Recent />
             <Starred />
             <Templates />
-            <Button variant="outlined">Create</Button>
+            <Button
+              startIcon={<QueueIcon />}
+              sx={{ height: 32 }}
+              variant="outlined"
+            >
+              Create
+            </Button>
           </Box>
         </Box>
       </Box>

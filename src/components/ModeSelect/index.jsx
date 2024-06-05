@@ -15,7 +15,21 @@ function ModeSelect() {
     setMode(event.target.value);
   };
   return (
-    <FormControl sx={{ minWidth: 120 }} size="small">
+    <FormControl
+      sx={{
+        minWidth: 120,
+        "& label": { color: "white" },
+        "& label.Mui-focused": { color: "white" },
+        "& .MuiBox-root": { color: "white" },
+        "& .MuiSvgIcon-root": { color: "white" },
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": { borderColor: "white" },
+          "&:hover fieldset": { borderColor: "white" },
+          "&.Mui-focused fieldset": { borderColor: "white" },
+        },
+      }}
+      size="small"
+    >
       <InputLabel id="demo-simple-select-label">Mode</InputLabel>
       <Select
         labelId="demo-simple-select-label"

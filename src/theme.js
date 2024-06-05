@@ -1,4 +1,3 @@
-import { colors } from "@mui/material";
 import { experimental_extendTheme as extendTheme } from "@mui/material/styles";
 
 // Create a theme instance.
@@ -30,25 +29,18 @@ const theme = extendTheme({
     },
     MuiOutlinedInput: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          color: theme.palette.primary.main,
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.primary.light,
-          },
-          "&:hover": {
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: theme.palette.primary.main,
-            },
-          },
+        root: {
           fontSize: "0.875rem",
-        }),
-      },
-    },
-    MuiFormLabel: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          color: theme.palette.primary.main,
-        }),
+          "& fieldset": {
+            borderWidth: "0.5px !important",
+          },
+          "&:hover fieldset": {
+            borderWidth: "1.5px !important",
+          },
+          "&.Mui-focused fieldset": {
+            borderWidth: "1.5px !important",
+          },
+        },
       },
     },
   },
@@ -59,33 +51,10 @@ const theme = extendTheme({
   colorSchemes: {
     light: {
       // palette for light mode
-      palette: {
-        primary: {
-          main: colors.blue[500],
-          light: colors.blue[300],
-          dark: colors.blue[700],
-        },
-        secondary: {
-          main: colors.red[500],
-          light: colors.red[300],
-          dark: colors.red[700],
-        },
-      },
+      palette: {},
     },
     dark: {
-      // palette for dark mode
-      palette: {
-        primary: {
-          main: colors.blue[300],
-          light: colors.blue[100],
-          dark: colors.blue[500],
-        },
-        secondary: {
-          main: colors.red[300],
-          light: colors.red[100],
-          dark: colors.red[500],
-        },
-      },
+      palette: {},
     },
   },
 });

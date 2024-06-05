@@ -1,3 +1,4 @@
+import { useState, useRef } from "react";
 import Box from "@mui/material/Box";
 import AppsIcon from "@mui/icons-material/Apps";
 import ModeSelect from "../ModeSelect";
@@ -9,17 +10,28 @@ import Recent from "./Menu/Recent";
 import Starred from "./Menu/Starred";
 import Templates from "./Menu/Templates";
 import Profiles from "./Menu/Profiles";
-import { Badge, Button, TextField, Tooltip } from "@mui/material";
+import {
+  Badge,
+  Button,
+  InputAdornment,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import QueueIcon from '@mui/icons-material/Queue';
+import QueueIcon from "@mui/icons-material/Queue";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 function AppBar() {
+  const [searchValue, setSearchValue] = useState("");
+  const inputSearchRef = useRef();
   return (
     <Box
       sx={{
         width: "100%",
         height: (theme) => theme.trello.appBarHeight,
-        // backgroundColor: "primary.light",
+        backgroundColor: (theme) =>
+          theme.palette.mode === "light" ? "#42a5f5" : "#455a64",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -30,11 +42,11 @@ function AppBar() {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-        <AppsIcon sx={{ color: "primary.main" }} />
+        <AppsIcon sx={{ color: "white" }} />
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <SvgIcon
             component={TrelloIcon}
-            sx={{ color: "primary.main" }}
+            sx={{ color: "white" }}
             inheritViewBox
           />
           <Typography
@@ -42,23 +54,19 @@ function AppBar() {
             sx={{
               fontSize: "1.4rem",
               fontWeight: "bold",
-              color: "primary.main",
+              color: "white",
             }}
           >
             Trello
           </Typography>
           <Box
-            sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
+            sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: 1 }}
           >
             <Workspaces />
             <Recent />
             <Starred />
             <Templates />
-            <Button
-              startIcon={<QueueIcon />}
-              sx={{ height: 32 }}
-              variant="outlined"
-            >
+            <Button startIcon={<QueueIcon />} sx={{ height: 32, color: "white" }}>
               Create
             </Button>
           </Box>
@@ -68,24 +76,61 @@ function AppBar() {
         sx={{
           display: "flex",
           alignItems: "center",
-          color: "primary.main",
           gap: 2,
         }}
       >
         <TextField
-          sx={{ minWidth: 100 }}
-          type="search"
+          ref={inputSearchRef}
+          sx={{
+            minWidth: 100,
+            maxWidth: 180,
+            "& label": { color: "white" },
+            "& label.Mui-focused": { color: "white" },
+            "& input": { color: "white" },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: "white" },
+              "&:hover fieldset": { borderColor: "white" },
+              "&.Mui-focused fieldset": { borderColor: "white" },
+            },
+          }}
+          type="text"
           label="Search"
           size="small"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon sx={{ color: "white" }} />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                {searchValue && (
+                  <CloseIcon
+                    fontSize="small"
+                    sx={{ color: "white", cursor: "pointer" }}
+                    onClick={() => {
+                      setSearchValue("");
+                      const input = inputSearchRef.current.querySelector(
+                        ".MuiInputBase-input"
+                      );
+                      input.focus();
+                    }}
+                  />
+                )}
+              </InputAdornment>
+            ),
+          }}
         ></TextField>
         <ModeSelect />
         <Tooltip title="Notification">
-          <Badge color="secondary" variant="dot" sx={{ cursor: "pointer" }}>
-            <NotificationsNoneIcon color="primary.main" />
+          <Badge color="warning" variant="dot" sx={{ cursor: "pointer" }}>
+            <NotificationsNoneIcon sx={{ color: "white" }} />
           </Badge>
         </Tooltip>
         <Tooltip title="Help">
-          <HelpOutlineIcon sx={{ cursor: "pointer", color: "primary.main" }} />
+          <HelpOutlineIcon sx={{ cursor: "pointer", color: "white" }} />
         </Tooltip>
         <Profiles />
       </Box>

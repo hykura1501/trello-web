@@ -7,16 +7,17 @@ import BoltIcon from "@mui/icons-material/Bolt";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 const MENU_STYLE = {
-  color: "primary.main",
-  bgcolor: "white",
+  color: "white",
+  bgcolor: (theme) => (theme.palette.mode === "light" ? "#82b1ff" : "#90a4ae"),
   border: "none",
   paddingX: "5px",
   borderRadius: "4px",
   "& .MuiSvgIcon-root": {
-    color: "primary.main",
+    color: "#6200ea",
   },
   "&:hover": {
-    bgcolor: "#bbdefb",
+    bgcolor: (theme) =>
+      theme.palette.mode === "light" ? "#448aff" : "#607d8b",
   },
 };
 
@@ -32,43 +33,40 @@ function BoardBar() {
         gap: 2,
         overflowX: "auto",
         overflowY: "hidden",
-        borderTop: "1px solid #2196f3",
+        borderBottom: "1.3px solid white",
         paddingX: 2,
+        backgroundColor: (theme) =>
+          theme.palette.mode === "light" ? "#1e88e5" : "#37474f",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
         <Chip
           sx={MENU_STYLE}
           clickable
-          onClick={() => {}}
           icon={<DashboardIcon />}
           label="Phi Ho's Dashboard"
         />
         <Chip
           sx={MENU_STYLE}
           clickable
-          onClick={() => {}}
           icon={<VpnLockIcon />}
           label="Public/Private Workspace"
         />
         <Chip
           sx={MENU_STYLE}
           clickable
-          onClick={() => {}}
           icon={<AddToDriveIcon />}
           label="Add to Google Drive"
         />
         <Chip
           sx={MENU_STYLE}
           clickable
-          onClick={() => {}}
           icon={<BoltIcon />}
           label="Automation"
         />
         <Chip
           sx={MENU_STYLE}
           clickable
-          onClick={() => {}}
           icon={<FilterListIcon />}
           label="Filter"
         />
@@ -76,7 +74,16 @@ function BoardBar() {
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
         <Button
           startIcon={<PersonAddAltIcon />}
-          sx={{ height: 32 }}
+          sx={{
+            height: 32,
+            color: "white",
+            bgcolor: (theme) =>
+              theme.palette.mode === "light" ? "#ffa000" : "#76ff03",
+            "&:hover": {
+              bgcolor: (theme) =>
+                theme.palette.mode === "light" ? "#ffca28" : "#64dd17",
+            },
+          }}
           variant="outlined"
         >
           Invite
@@ -84,10 +91,12 @@ function BoardBar() {
         <AvatarGroup
           max={7}
           sx={{
+            gap: '10px',
             "& .MuiAvatar-root": {
               height: 34,
               width: 34,
               fontSize: 16,
+              border: 'none'
             },
           }}
         >

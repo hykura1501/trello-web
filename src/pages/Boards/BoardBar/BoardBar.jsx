@@ -6,6 +6,7 @@ import AddToDriveIcon from "@mui/icons-material/AddToDrive";
 import BoltIcon from "@mui/icons-material/Bolt";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import { capitalizeFirstLetter } from "#/utils/formatters";
 const MENU_STYLE = {
   color: "white",
   bgcolor: (theme) => (theme.palette.mode === "light" ? "#82b1ff" : "#90a4ae"),
@@ -21,7 +22,7 @@ const MENU_STYLE = {
   },
 };
 
-function BoardBar() {
+function BoardBar({ board }) {
   return (
     <Box
       sx={{
@@ -33,7 +34,9 @@ function BoardBar() {
         gap: 2,
         overflowX: "auto",
         overflowY: "hidden",
-        borderBottom: "1.3px solid white",
+        "&::-webkit-scrollbar-track": {
+          m: "0 16px",
+        },
         paddingX: 2,
         backgroundColor: (theme) =>
           theme.palette.mode === "light" ? "#1e88e5" : "#37474f",
@@ -44,13 +47,13 @@ function BoardBar() {
           sx={MENU_STYLE}
           clickable
           icon={<DashboardIcon />}
-          label="Phi Ho's Dashboard"
+          label={board?.title}
         />
         <Chip
           sx={MENU_STYLE}
           clickable
           icon={<VpnLockIcon />}
-          label="Public/Private Workspace"
+          label={`${capitalizeFirstLetter(board?.type)} Workspaces`}
         />
         <Chip
           sx={MENU_STYLE}
@@ -91,12 +94,14 @@ function BoardBar() {
         <AvatarGroup
           max={7}
           sx={{
-            gap: '10px',
+            gap: "10px",
             "& .MuiAvatar-root": {
               height: 34,
               width: 34,
               fontSize: 16,
-              border: 'none'
+              border: "none",
+              cursor: "pointer",
+              color: "white",
             },
           }}
         >

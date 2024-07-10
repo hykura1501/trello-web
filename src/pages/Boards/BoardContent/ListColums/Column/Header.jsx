@@ -1,17 +1,19 @@
-import * as React from "react";
-import { Box, Button, Menu } from "@mui/material";
+import { useState } from "react";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Menu from "@mui/material/Menu";
 import Divider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Typography from "@mui/material/Typography";
 import ContentCut from "@mui/icons-material/ContentCut";
 import ContentCopy from "@mui/icons-material/ContentCopy";
 import ContentPaste from "@mui/icons-material/ContentPaste";
 import Cloud from "@mui/icons-material/Cloud";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-function Workspaces() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+function Header({ title }) {
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -20,17 +22,27 @@ function Workspaces() {
     setAnchorEl(null);
   };
   return (
-    <Box>
-      <Button
+    <Box
+      sx={{
+        height: (theme) => theme.trello.columnHeaderHeight,
+        p: 2,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <Typography fontSize="16px" variant="h6">
+        {title}
+      </Typography>
+      <ExpandMore
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        endIcon={<ExpandMoreIcon />}
-        sx={{ color: "white" }}
-      >
-        Workspaces
-      </Button>
+        sx={{
+          cursor: "pointer",
+        }}
+      />
       <Menu
         anchorEl={anchorEl}
         open={open}
@@ -44,38 +56,35 @@ function Workspaces() {
             <ContentCut fontSize="small" />
           </ListItemIcon>
           <ListItemText>Cut</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘X
-          </Typography>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <ContentCopy fontSize="small" />
           </ListItemIcon>
           <ListItemText>Copy</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘C
-          </Typography>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <ContentPaste fontSize="small" />
           </ListItemIcon>
           <ListItemText>Paste</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘V
-          </Typography>
         </MenuItem>
         <Divider />
         <MenuItem>
           <ListItemIcon>
             <Cloud fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Web Clipboard</ListItemText>
+          <ListItemText>Archive this column</ListItemText>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <DeleteForeverIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Remove this column</ListItemText>
         </MenuItem>
       </Menu>
     </Box>
   );
 }
 
-export default Workspaces;
+export default Header;

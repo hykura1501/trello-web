@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import Box from "@mui/material/Box";
 import AppsIcon from "@mui/icons-material/Apps";
-import ModeSelect from "../ModeSelect";
+import ModeSelect from "../ModeSelect/ModeSelect";
 import { ReactComponent as TrelloIcon } from "#/assets/trello.svg";
 import SvgIcon from "@mui/material/SvgIcon";
 import Typography from "@mui/material/Typography";
@@ -39,6 +39,9 @@ function AppBar() {
         overflowX: "auto",
         padding: 2,
         overflowY: "hidden",
+        "&::-webkit-scrollbar-track": {
+          m: "0 16px",
+        },
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -60,13 +63,20 @@ function AppBar() {
             Trello
           </Typography>
           <Box
-            sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: 1 }}
+            sx={{
+              display: { xs: "none", md: "flex" },
+              alignItems: "center",
+              gap: 1,
+            }}
           >
             <Workspaces />
             <Recent />
             <Starred />
             <Templates />
-            <Button startIcon={<QueueIcon />} sx={{ height: 32, color: "white" }}>
+            <Button
+              startIcon={<QueueIcon />}
+              sx={{ height: 32, color: "white" }}
+            >
               Create
             </Button>
           </Box>
@@ -132,7 +142,8 @@ function AppBar() {
         <Tooltip title="Help">
           <HelpOutlineIcon sx={{ cursor: "pointer", color: "white" }} />
         </Tooltip>
-        <Profiles />
+        <Button href="/login" sx={{ color: "white" }} variant="outlined">Login</Button>
+        {/* <Profiles /> Login mới hiện Profile */}
       </Box>
     </Box>
   );

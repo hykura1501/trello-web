@@ -7,20 +7,19 @@ import {
   InputAdornment,
   InputLabel,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Auth from "./Auth";
 import { NavLink } from "react-router-dom";
 import * as authServices from "#/services/authServices";
-
-function Login() {
+function Register() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const [fields, setFields] = useState({
+    fullName: "",
     email: "",
     password: "",
   });
@@ -33,14 +32,12 @@ function Login() {
       };
     });
   };
-
-  const handleLogin = async () => {
-    const data = await authServices.login(fields);
+  const handleRegister = async () => {
+    const data = await authServices.register(fields);
     console.log(data);
   };
-
   return (
-    <Auth title={"Login to continue"}>
+    <Auth title={"Register to continue"}>
       <Box
         sx={{
           display: "flex",
@@ -55,6 +52,15 @@ function Login() {
           variant="standard"
           name="email"
           value={fields.email}
+          onChange={setFieldsValue}
+        />
+        <TextField
+          sx={{ m: 0.5 }}
+          id="standard-basic"
+          label="Full Name"
+          variant="standard"
+          name="fullName"
+          value={fields.fullName}
           onChange={setFieldsValue}
         />
         <FormControl sx={{ m: 0.5 }} variant="standard">
@@ -82,23 +88,16 @@ function Login() {
         <Button
           variant="contained"
           sx={{ bgcolor: "blue", color: "white", mt: "2px" }}
-          onClick={handleLogin}
+          onClick={handleRegister}
         >
-          Login
+          Register
         </Button>
         <Box sx={{ display: "flex", justifyContent: "center", pt: 1.5 }}>
           <NavLink
-            to="/forget-password"
+            to="/login"
             style={{ color: "blue", textDecoration: "none" }}
           >
-            Forget password
-          </NavLink>
-          <Typography sx={{ mx: 1 }}>•</Typography>
-          <NavLink
-            to="/register"
-            style={{ color: "blue", textDecoration: "none" }}
-          >
-            Create an account
+            Already have an account? Log in
           </NavLink>
         </Box>
       </Box>
@@ -106,4 +105,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

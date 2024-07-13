@@ -1,6 +1,21 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import publicRoutes from "#/routes/routes";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { getUser } from "#/services/authServices";
 function App() {
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = Cookies.get("token");
+      if (token) {
+        const headers = { Authorization: "Bearer " + token };
+        const data = await getUser({ headers });
+        setUser(data);
+      }
+    };
+    fetchUser();
+  }, []);
   return (
     <Router>
       <Routes>
@@ -10,7 +25,7 @@ function App() {
             <Route
               key={index}
               path={route.path}
-              element={<Page></Page>}
+              element={<Page user={user}></Page>}
             ></Route>
           );
         })}

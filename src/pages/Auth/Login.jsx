@@ -16,6 +16,7 @@ import { NavLink } from "react-router-dom";
 import * as authServices from "#/services/authServices";
 
 function Login() {
+  const [showError, setShowError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -36,7 +37,12 @@ function Login() {
 
   const handleLogin = async () => {
     const data = await authServices.login(fields);
-    console.log(data);
+    if (data) {
+      window.location.href = "/";
+      setShowError("")
+    } else {
+      setShowError("Email or password is incorrect! Please try again.");
+    }
   };
 
   return (
@@ -79,6 +85,9 @@ function Login() {
             }
           />
         </FormControl>
+        {!!showError && (
+          <Typography sx={{ color: "red", fontSize: '0.8rem', my: '4px' }}>{showError}</Typography>
+        )}
         <Button
           variant="contained"
           sx={{ bgcolor: "blue", color: "white", mt: "2px" }}

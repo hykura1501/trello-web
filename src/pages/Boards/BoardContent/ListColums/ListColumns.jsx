@@ -1,46 +1,26 @@
 import Box from "@mui/material/Box";
 import Column from "./Column/Column";
-import { Button } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-
-import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  horizontalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-function ListColumns({ columns }) {
-  const [items, setItems] = useState(columns);
-
-  function handleDragEnd(event) {
-    const { active, over } = event;
-
-    if (active.id !== over.id) {
-      setItems((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
-
-        return arrayMove(items, oldIndex, newIndex);
-      });
-    }
-  }
-
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
+function ListColumns({ columns, createNewColumn }) {
+  const params = useParams();
+  const [columnCreating, setColumnCreating] = useState(false);
+  const [titleColumn, setTitleColumn] = useState("");
+  const handleShowBoxCreate = () => {
+    setColumnCreating(true);
+  };
+  const handleCreateColumn = async () => {
+    await createNewColumn({
+      boardId: params.boardId,
+      title: titleColumn,
+    });
+    setColumnCreating(false)
+    setTitleColumn("")
+  };
   return (
     <Box
       sx={{
@@ -63,44 +43,94 @@ function ListColumns({ columns }) {
         },
       }}
     >
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext items={items} strategy={horizontalListSortingStrategy}>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            // onDragOver={handleDragOver}
-          >
-            {items.map((column) => {
-              return <Column key={column._id} id={column} column={column} />;
-            })}
-          </DndContext>
-        </SortableContext>
-      </DndContext>
-
-      <Box
-        sx={{
-          bgcolor: "#ffffff3c",
-          height: "fit-content",
-          borderRadius: "6px",
-          minWidth: "200px",
-          maxWidth: "200px",
-        }}
-      >
-        <Button
+      {columns?.map((column, index) => {
+        return <Column key={index} id={column} column={column} />;
+      })}
+      {/* Create column */}
+      {columnCreating ? (
+        <Box
           sx={{
-            color: "white",
-            ml: 1.5,
-            py: 1,
+            minWidth: "266px",
+            maxWidth: "266px",
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light" ? "#f1f8e9" : "#616161",
+            borderRadius: "6px",
+            height: "fit-content",
+            maxHeight: (theme) =>
+              `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`,
           }}
-          startIcon={<PostAddOutlinedIcon />}
         >
-          Add new column
-        </Button>
-      </Box>
+          <Box
+            sx={{
+              p: 0.8,
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+            }}
+          >
+            <TextField
+              value={titleColumn}
+              onChange={(e) => setTitleColumn(e.target.value)}
+              sx={{
+                width: "100%",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: "blue" },
+                  "&:hover fieldset": { borderColor: "blue" },
+                },
+              }}
+              placeholder="Enter list title ..."
+              variant="outlined"
+              size="small"
+            />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              <Button
+                size="small"
+                variant="contained"
+                onClick={handleCreateColumn}
+              >
+                Add list
+              </Button>
+              <IconButton
+                size="small"
+                onClick={() => {
+                  setColumnCreating(false);
+                  setTitleColumn("");
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          </Box>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            bgcolor: "#ffffff3c",
+            height: "fit-content",
+            borderRadius: "6px",
+            minWidth: "200px",
+            maxWidth: "200px",
+          }}
+        >
+          <Button
+            sx={{
+              color: "white",
+              ml: 1.5,
+              py: 1,
+            }}
+            startIcon={<PostAddOutlinedIcon />}
+            onClick={handleShowBoxCreate}
+          >
+            Add new column
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 }

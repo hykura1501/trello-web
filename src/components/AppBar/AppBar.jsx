@@ -22,7 +22,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import QueueIcon from "@mui/icons-material/Queue";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-function AppBar() {
+function AppBar({ user }) {
   const [searchValue, setSearchValue] = useState("");
   const inputSearchRef = useRef();
   return (
@@ -142,8 +142,13 @@ function AppBar() {
         <Tooltip title="Help">
           <HelpOutlineIcon sx={{ cursor: "pointer", color: "white" }} />
         </Tooltip>
-        <Button href="/login" sx={{ color: "white" }} variant="outlined">Login</Button>
-        {/* <Profiles /> Login mới hiện Profile */}
+        {user ? (
+          <Profiles />
+        ) : (
+          <Button href="/login" sx={{ color: "white" }} variant="outlined">
+            Login
+          </Button>
+        )}
       </Box>
     </Box>
   );

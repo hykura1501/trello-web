@@ -1,5 +1,5 @@
 const routes = {
-  Board: "/",
+  Board: "/:boardId",
   Login: "/login",
   Register: "/register",
 };

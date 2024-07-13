@@ -18,4 +18,11 @@ export const register = async (body) => {
   }
 };
 
-export default { login, register };
+export const getUser = async (headers) => {
+  try {
+    const response = await httpRequest.get("/user/profile", headers);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

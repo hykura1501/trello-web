@@ -7,7 +7,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import CommentIcon from "@mui/icons-material/Comment";
 import Typography from "@mui/material/Typography";
 import AttachmentIcon from "@mui/icons-material/Attachment";
-function CardItem({ card, id }) {
+function CardItem({ card }) {
   const showCardActions =
     !!card?.memberIds?.length ||
     !!card?.comments?.length ||

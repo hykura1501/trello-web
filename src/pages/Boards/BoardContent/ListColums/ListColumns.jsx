@@ -7,19 +7,23 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 function ListColumns({ columns, createNewColumn }) {
+  // column logical
   const params = useParams();
   const [columnCreating, setColumnCreating] = useState(false);
   const [titleColumn, setTitleColumn] = useState("");
-  const handleShowBoxCreate = () => {
-    setColumnCreating(true);
-  };
   const handleCreateColumn = async () => {
     await createNewColumn({
       boardId: params.boardId,
       title: titleColumn,
     });
-    setColumnCreating(false)
-    setTitleColumn("")
+    setColumnCreating(false);
+    setTitleColumn("");
+  };
+  //creating card
+  const [showCreatingCard, setShowCreatingCard] = useState("");
+  const handleShowCreateCard = (columnId) => {
+    setColumnCreating(false);
+    setShowCreatingCard(columnId);
   };
   return (
     <Box
@@ -43,8 +47,15 @@ function ListColumns({ columns, createNewColumn }) {
         },
       }}
     >
-      {columns?.map((column, index) => {
-        return <Column key={index} id={column} column={column} />;
+      {columns?.map((column) => {
+        return (
+          <Column
+            key={column.columnId}
+            column={column}
+            showCreatingCard={showCreatingCard}
+            handleShowCreateCard={handleShowCreateCard}
+          />
+        );
       })}
       {/* Create column */}
       {columnCreating ? (
@@ -69,6 +80,7 @@ function ListColumns({ columns, createNewColumn }) {
             }}
           >
             <TextField
+              autoFocus
               value={titleColumn}
               onChange={(e) => setTitleColumn(e.target.value)}
               sx={{
@@ -125,7 +137,10 @@ function ListColumns({ columns, createNewColumn }) {
               py: 1,
             }}
             startIcon={<PostAddOutlinedIcon />}
-            onClick={handleShowBoxCreate}
+            onClick={() => {
+              setColumnCreating(true);
+              setShowCreatingCard("");
+            }}
           >
             Add new column
           </Button>

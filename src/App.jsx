@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { getUser } from "#/services/authServices";
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchUser = async () => {
       const token = Cookies.get("token");

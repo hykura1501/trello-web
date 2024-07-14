@@ -27,8 +27,8 @@ function ListCard({ cards }) {
           gap: 2,
         }}
       >
-        {cards?.map((card, index) => (
-          <CardItem key={index} id={index} card={card} />
+        {cards?.map((card) => (
+          <CardItem key={card.cardId} card={card} />
         ))}
       </Box>
     </Box>

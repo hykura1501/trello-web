@@ -13,7 +13,9 @@ function Board({ user }) {
   useEffect(() => {
     const fetchBoard = async () => {
       const data = await getBoard(params.boardId);
-      setBoard(data);
+      if (data) {
+        setBoard(data);
+      }
     };
     fetchBoard();
   }, [params.boardId]);
@@ -23,6 +25,11 @@ function Board({ user }) {
       sx={{
         display: "flex",
         justifyContent: "center",
+        backgroundImage: "url(./src/assets/bgb3.webp)",
+        backgroundPosition: "50%",
+        backgroundSize: "cover",
+        backgroundBlendMode: "darken",
+        backgroundColor: "#0000004d",
       }}
     >
       <Container disableGutters maxWidth={false} sx={{ height: "100vh" }}>

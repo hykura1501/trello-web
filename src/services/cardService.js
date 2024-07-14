@@ -26,3 +26,12 @@ export const getAllCards = async (columnId) => {
     console.log(error);
   }
 };
+
+export const updateCard = async (body) => {
+  try {
+    const res = await httpRequest.patch(`/card/update`, body);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

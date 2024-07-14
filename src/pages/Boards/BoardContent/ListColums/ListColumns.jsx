@@ -4,7 +4,11 @@ import { Button, IconButton, TextField } from "@mui/material";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
-import { getAllColumns, createColumn } from "#/services/columnServices";
+import {
+  getAllColumns,
+  createColumn,
+  updateColumn,
+} from "#/services/columnServices";
 
 function ListColumns({ boardId }) {
   // column logical
@@ -23,19 +27,32 @@ function ListColumns({ boardId }) {
   }, [boardId]);
   //call api create column
   const handleCreateColumn = async () => {
-    const column = await createColumn({
-      boardId: boardId,
-      title: titleColumn,
-    });
-    setColumns([...columns, column]);
-    setColumnCreating(false);
-    setTitleColumn("");
+    if (titleColumn.trim()) {
+      const column = await createColumn({
+        boardId: boardId,
+        title: titleColumn.trim(),
+      });
+      setColumns([...columns, column]);
+      setColumnCreating(false);
+      setTitleColumn("");
+    } else {
+      setTitleColumn("");
+    }
   };
   //creating card
   const [showCreatingCard, setShowCreatingCard] = useState("");
   const handleShowCreateCard = (columnId) => {
     setColumnCreating(false);
     setShowCreatingCard(columnId);
+  };
+  //handleUpdateColumn
+  const handleUpdateColumn = async (body) => {
+    const data = await updateColumn(body);
+    if (data) {
+      const idx = columns.findIndex((col) => col.columnId === data.columnId);
+      columns[idx] = data;
+      setColumns([...columns]);
+    }
   };
   return (
     <Box
@@ -66,6 +83,8 @@ function ListColumns({ boardId }) {
             column={column}
             showCreatingCard={showCreatingCard}
             handleShowCreateCard={handleShowCreateCard}
+            handleUpdateColumn={handleUpdateColumn}
+            setColumnCreating={setColumnCreating}
           />
         );
       })}
@@ -76,7 +95,7 @@ function ListColumns({ boardId }) {
             minWidth: "266px",
             maxWidth: "266px",
             backgroundColor: (theme) =>
-              theme.palette.mode === "light" ? "#f1f8e9" : "#616161",
+              theme.palette.mode === "light" ? "#101204" : "#101204",
             borderRadius: "6px",
             height: "fit-content",
             maxHeight: (theme) =>
@@ -101,6 +120,17 @@ function ListColumns({ boardId }) {
                   "& fieldset": { borderColor: "blue" },
                   "&:hover fieldset": { borderColor: "blue" },
                 },
+                input: {
+                  "&::placeholder": {
+                    color: "white",
+                  },
+                  color: "white",
+                },
+                overflow: "hidden",
+                overflowY: "auto",
+                minHeight: "36px",
+                maxHeight: "160px",
+                color: "white",
               }}
               placeholder="Enter list title ..."
               variant="outlined"
@@ -126,6 +156,7 @@ function ListColumns({ boardId }) {
                   setColumnCreating(false);
                   setTitleColumn("");
                 }}
+                sx={{ color: "white" }}
               >
                 <CloseIcon />
               </IconButton>

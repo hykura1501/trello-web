@@ -26,3 +26,12 @@ export const getAllColumns = async (boardId) => {
     console.log(error);
   }
 };
+
+export const updateColumn = async (body) => {
+  try {
+    const res = await httpRequest.patch(`/column/update`, body);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

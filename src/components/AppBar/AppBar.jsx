@@ -31,7 +31,7 @@ function AppBar({ user }) {
         width: "100%",
         height: (theme) => theme.trello.appBarHeight,
         backgroundColor: (theme) =>
-          theme.palette.mode === "light" ? "#42a5f5" : "#455a64",
+          theme.palette.mode === "light" ? "#1d2125" : "#455a64",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",

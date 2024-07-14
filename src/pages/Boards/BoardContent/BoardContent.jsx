@@ -7,8 +7,9 @@ function BoardContent({ boardId }) {
         width: "100%",
         p: "8px 0",
         height: (theme) => theme.trello.boardContentHeight,
-        backgroundColor: (theme) =>
-          theme.palette.mode === "light" ? "#1e88e5" : "#37474f",
+        // backgroundColor: (theme) =>
+          // theme.palette.mode === "light" ? "#1e88e5" : "#37474f",
+
       }}
     >
       {/* List Column */}

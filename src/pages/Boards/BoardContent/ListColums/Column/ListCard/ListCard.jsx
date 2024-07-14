@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import CardItem from "./CardItem/CardItem";
-function ListCard({ cards }) {
+function ListCard({ cards, handleUpdateCard }) {
   return (
     <Box
       sx={{
@@ -28,7 +28,11 @@ function ListCard({ cards }) {
         }}
       >
         {cards?.map((card) => (
-          <CardItem key={card.cardId} card={card} />
+          <CardItem
+            key={card.cardId}
+            card={card}
+            handleUpdateCard={handleUpdateCard}
+          />
         ))}
       </Box>
     </Box>

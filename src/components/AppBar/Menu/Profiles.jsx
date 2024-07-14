@@ -24,7 +24,7 @@ function Profiles() {
           aria-expanded={open ? "true" : undefined}
         >
           <Avatar
-            src="https://scontent.fhan3-3.fna.fbcdn.net/v/t39.30808-1/438305881_933364531817858_3595523909023700955_n.jpg?stp=dst-jpg_p100x100&_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeH5S6aHsjsN2UU4Mae_3EU_mGNwJJK0tguYY3AkkrS2C-6HHo8sTL1JbiszZNhRXwBL2OLu7F8_Msfe55C3Bh7A&_nc_ohc=zaZzaU9WFe0Q7kNvgGVFCDg&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.fhan3-3.fna&oh=00_AYBnsggvflWAdPUPRK6TYz88jOgTNNMM-swrvltEEOZv0w&oe=66611035"
+            src="https://scontent.fdad1-3.fna.fbcdn.net/v/t39.30808-1/438305881_933364531817858_3595523909023700955_n.jpg?stp=dst-jpg_p200x200&_nc_cat=111&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeH5S6aHsjsN2UU4Mae_3EU_mGNwJJK0tguYY3AkkrS2C-6HHo8sTL1JbiszZNhRXwBL2OLu7F8_Msfe55C3Bh7A&_nc_ohc=R7hKucIbQO0Q7kNvgFBY_Wq&_nc_ht=scontent.fdad1-3.fna&oh=00_AYBxt5UMBbz8-7zoAXwNFXKXrFdgl69W3jVT1YQgIaHjhA&oe=66995035"
             sx={{ width: 34, height: 34 }}
           />
         </IconButton>

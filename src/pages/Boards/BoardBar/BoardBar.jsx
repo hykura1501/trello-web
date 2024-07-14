@@ -1,28 +1,25 @@
-import { Avatar, AvatarGroup, Button, Chip, Tooltip } from "@mui/material";
+import {
+  Avatar,
+  AvatarGroup,
+  Button,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import VpnLockIcon from "@mui/icons-material/VpnLock";
 import AddToDriveIcon from "@mui/icons-material/AddToDrive";
 import BoltIcon from "@mui/icons-material/Bolt";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { capitalizeFirstLetter } from "#/utils/formatters";
-const MENU_STYLE = {
-  color: "white",
-  bgcolor: (theme) => (theme.palette.mode === "light" ? "#82b1ff" : "#90a4ae"),
-  border: "none",
-  paddingX: "5px",
-  borderRadius: "4px",
-  "& .MuiSvgIcon-root": {
-    color: "#6200ea",
-  },
-  "&:hover": {
-    bgcolor: (theme) =>
-      theme.palette.mode === "light" ? "#448aff" : "#607d8b",
-  },
-};
-
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIcon from "@mui/icons-material/Star";
+import { useState } from "react";
+import LockIcon from "@mui/icons-material/Lock";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 function BoardBar({ board }) {
+  const [starred, setStarred] = useState(false);
+  const [visibility, setVisibility] = useState(board?.type);
   return (
     <Box
       sx={{
@@ -38,41 +35,62 @@ function BoardBar({ board }) {
           m: "0 16px",
         },
         paddingX: 2,
-        backgroundColor: (theme) =>
-          theme.palette.mode === "light" ? "#1e88e5" : "#37474f",
+        backdropFilter: "blur(4px)",
+        background: "#0000003d",
+        // backgroundColor: (theme) =>
+        //   theme.palette.mode === "light" ? "#A7E6FF" : "#37474f",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-        <Chip
-          sx={MENU_STYLE}
-          clickable
-          icon={<DashboardIcon />}
-          label={board?.title}
-        />
-        <Chip
-          sx={MENU_STYLE}
-          clickable
-          icon={<VpnLockIcon />}
-          label={`${capitalizeFirstLetter(board?.type)} Workspaces`}
-        />
-        <Chip
-          sx={MENU_STYLE}
-          clickable
-          icon={<AddToDriveIcon />}
-          label="Add to Google Drive"
-        />
-        <Chip
-          sx={MENU_STYLE}
-          clickable
-          icon={<BoltIcon />}
-          label="Automation"
-        />
-        <Chip
-          sx={MENU_STYLE}
-          clickable
-          icon={<FilterListIcon />}
-          label="Filter"
-        />
+        <Typography
+          variant="h1"
+          sx={{ fontSize: "18px", fontWeight: "bold", color: "white" }}
+        >
+          {board?.title}
+        </Typography>
+        {starred ? (
+          <IconButton
+            size="small"
+            sx={{ color: "white" }}
+            onClick={() => setStarred(false)}
+          >
+            <StarIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            size="small"
+            sx={{ color: "white" }}
+            onClick={() => setStarred(true)}
+          >
+            <StarBorderIcon />
+          </IconButton>
+        )}
+        {visibility === "public" ? (
+          <IconButton
+            size="small"
+            sx={{ color: "white" }}
+            onClick={() => setVisibility("private")}
+          >
+            <VpnLockIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            size="small"
+            sx={{ color: "white" }}
+            onClick={() => setVisibility("public")}
+          >
+            <LockIcon />
+          </IconButton>
+        )}
+        <IconButton size="small" sx={{ color: "white" }}>
+          <AddToDriveIcon />
+        </IconButton>
+        <IconButton size="small" sx={{ color: "white" }}>
+          <BoltIcon />
+        </IconButton>
+        <IconButton size="small" sx={{ color: "white" }}>
+          <FilterListIcon />
+        </IconButton>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
         <Button
@@ -108,48 +126,6 @@ function BoardBar({ board }) {
           <Tooltip title="Phi Ho">
             <Avatar
               alt="Phi Ho"
-              src="https://i.pinimg.com/564x/41/ad/d7/41add78e6102d35850d5f4ab5e163496.jpg"
-            />
-          </Tooltip>
-          <Tooltip title="Phi Ho">
-            <Avatar
-              alt="Phi Ho"
-              src="https://i.pinimg.com/564x/fe/e1/42/fee14277530e31cf1766e6a9f24b4270.jpg"
-            />
-          </Tooltip>
-          <Tooltip title="Phi Ho">
-            <Avatar
-              alt="Phi Ho"
-              src="https://i.pinimg.com/564x/82/ab/c1/82abc102fc1dc40b586377afe5dacd42.jpg"
-            />
-          </Tooltip>
-          <Tooltip title="Phi Ho">
-            <Avatar
-              alt="Phi Ho"
-              src="https://i.pinimg.com/564x/9c/36/ab/9c36ab95540ea0976c87ab652869e16d.jpg"
-            />
-          </Tooltip>
-          <Tooltip title="Phi Ho">
-            <Avatar
-              alt="Phi Ho"
-              src="https://i.pinimg.com/564x/15/39/8c/15398ca9011feebc71dd75bdb012a762.jpg"
-            />
-          </Tooltip>
-          <Tooltip title="Phi Ho">
-            <Avatar
-              alt="Phi Ho"
-              src="https://i.pinimg.com/564x/f8/f0/dc/f8f0dc8f6fe832ed33da2c8f37d2a9a8.jpg"
-            />
-          </Tooltip>
-          <Tooltip title="Phi Ho">
-            <Avatar
-              alt="Phi Ho"
-              src="https://i.pinimg.com/564x/8a/19/ed/8a19edb6fc4c4e1d58e875b7f1fdf502.jpg"
-            />
-          </Tooltip>
-          <Tooltip title="Phi Ho">
-            <Avatar
-              alt="Phi Ho"
               src="https://i.pinimg.com/564x/63/9e/80/639e80599d84ef3adcfb8531fed2ac32.jpg"
             />
           </Tooltip>
@@ -160,6 +136,9 @@ function BoardBar({ board }) {
             />
           </Tooltip>
         </AvatarGroup>
+        <IconButton size="small" sx={{ color: "white" }}>
+          <MoreHorizIcon />
+        </IconButton>
       </Box>
     </Box>
   );

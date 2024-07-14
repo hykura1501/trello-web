@@ -18,7 +18,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useEffect, useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { getAllCards } from "#/services/cardService";
+import { getAllCards, createCard } from "#/services/cardService";
 
 function Column({ column, showCreatingCard, handleShowCreateCard }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -30,10 +30,23 @@ function Column({ column, showCreatingCard, handleShowCreateCard }) {
   useEffect(() => {
     const fetchCardsOfColumn = async () => {
       const data = await getAllCards(column.columnId);
-      setCards(data);
+      if (data) {
+        setCards(data);
+      }
     };
     fetchCardsOfColumn();
   }, [column.columnId]);
+  //call api create card
+  const handleCreateCard = async () => {
+    const card = await createCard({
+      boardId: column.boardId,
+      columnId: column.columnId,
+      title: titleCard,
+    });
+    setCards([...cards, card]);
+    handleShowCreateCard("");
+    setTitleCard("");
+  };
   return (
     <Box
       sx={{
@@ -144,7 +157,7 @@ function Column({ column, showCreatingCard, handleShowCreateCard }) {
               gap: 1,
             }}
           >
-            <Button size="small" variant="contained">
+            <Button size="small" variant="contained" onClick={handleCreateCard}>
               Add card
             </Button>
             <IconButton

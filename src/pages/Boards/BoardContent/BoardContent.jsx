@@ -1,23 +1,6 @@
 import { Box } from "@mui/material";
 import ListColumns from "./ListColums/ListColumns";
-import { useEffect, useState } from "react";
-import { getAllColumns, createColumn } from "#/services/columnServices";
-
 function BoardContent({ boardId }) {
-  //api get all column of boardId
-  const [columns, setColumns] = useState([]);
-  useEffect(() => {
-    const fetchColumnsOfBoard = async () => {
-      const data = await getAllColumns(boardId);
-      setColumns(data);
-    };
-    fetchColumnsOfBoard();
-  }, [boardId]);
-  //call api create column
-  const createNewColumn = async (newColumnData) => {
-    const column = await createColumn(newColumnData);
-    setColumns([...columns, column]);
-  };
   return (
     <Box
       sx={{
@@ -29,7 +12,7 @@ function BoardContent({ boardId }) {
       }}
     >
       {/* List Column */}
-      <ListColumns columns={columns} createNewColumn={createNewColumn} />
+      <ListColumns boardId={boardId} />
     </Box>
   );
 }

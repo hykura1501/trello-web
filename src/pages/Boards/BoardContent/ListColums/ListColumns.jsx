@@ -3,19 +3,31 @@ import Column from "./Column/Column";
 import { Button, IconButton, TextField } from "@mui/material";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getAllColumns, createColumn } from "#/services/columnServices";
 
-function ListColumns({ columns, createNewColumn }) {
+function ListColumns({ boardId }) {
   // column logical
-  const params = useParams();
   const [columnCreating, setColumnCreating] = useState(false);
   const [titleColumn, setTitleColumn] = useState("");
+  //api get all column of boardId
+  const [columns, setColumns] = useState([]);
+  useEffect(() => {
+    const fetchColumnsOfBoard = async () => {
+      const data = await getAllColumns(boardId);
+      if (data) {
+        setColumns(data);
+      }
+    };
+    fetchColumnsOfBoard();
+  }, [boardId]);
+  //call api create column
   const handleCreateColumn = async () => {
-    await createNewColumn({
-      boardId: params.boardId,
+    const column = await createColumn({
+      boardId: boardId,
       title: titleColumn,
     });
+    setColumns([...columns, column]);
     setColumnCreating(false);
     setTitleColumn("");
   };

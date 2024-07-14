@@ -9,6 +9,15 @@ export const getCard = async (cardId) => {
   }
 };
 
+export const createCard = async (body) => {
+  try {
+    const res = await httpRequest.post(`/card/new`, body);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getAllCards = async (columnId) => {
   try {
     const res = await httpRequest.get(`/card/${columnId}`);

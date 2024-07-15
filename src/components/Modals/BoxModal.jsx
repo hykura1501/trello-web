@@ -6,9 +6,9 @@ const style = {
   transform: "translate(-50%, -60px)",
   width: 768,
   bgcolor: "#323940",
-  borderRadius: 8,
+  borderRadius: 4,
   boxShadow: 24,
-  p: 4,
+  p: 2.5,
   minHeight: 1000,
   overflowY: "auto",
 };

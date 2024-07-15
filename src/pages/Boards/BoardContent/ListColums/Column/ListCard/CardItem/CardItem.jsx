@@ -11,10 +11,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useRef, useState } from "react";
 import MenuAction from "#/components/MenuAction/MenuAction";
 import ContentEditable from "react-contenteditable";
+import EditCard from "#/components/Modals/EditCard";
 
 function CardItem({ card, handleUpdateCard }) {
   const [cardTitle, setCardTitle] = useState(card?.title);
   const cardRef = useRef();
+  //Change Title Card
   const handleChangeTitleCard = async () => {
     const newCardTitle = cardRef.current.innerText.trim();
     if (newCardTitle && newCardTitle !== card?.title) {
@@ -29,11 +31,16 @@ function CardItem({ card, handleUpdateCard }) {
       cardRef.current.innerText = card?.title;
     }
   };
+  //Change Title Card
+  //Card Action
   const showCardActions =
     !!card?.memberIds?.length ||
     !!card?.comments?.length ||
     !!card?.attachments?.length;
-  const [showEditCard, setShowEditCard] = useState(false);
+  //Card Action
+  //Open Box Modal Edit Card
+  const [openModal, setOpenModal] = useState(false);
+  //Open Box Modal Edit Card
   return (
     <Card
       sx={{
@@ -63,14 +70,16 @@ function CardItem({ card, handleUpdateCard }) {
           style={{
             color: "#9aa4af",
             fontSize: "0.8rem",
+            flex: 1,
           }}
         />
         <IconButton
           sx={{ color: "white", height: "14px", width: "14px" }}
-          onClick={() => setShowEditCard(true)}
+          onClick={() => setOpenModal(true)}
         >
-          <MenuAction Icon={EditIcon} />
+          <EditIcon />
         </IconButton>
+        <EditCard openModal={openModal} setOpenModal={setOpenModal}></EditCard>
       </CardContent>
       {showCardActions && (
         <CardActions

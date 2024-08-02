@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import CardItem from "./CardItem/CardItem";
-function ListCard({ cards, handleUpdateCard }) {
+function ListCard({ columnTitle, cards, handleUpdateCard }) {
   return (
     <Box
       sx={{
@@ -27,13 +27,16 @@ function ListCard({ cards, handleUpdateCard }) {
           gap: 2,
         }}
       >
-        {cards?.map((card) => (
-          <CardItem
-            key={card.cardId}
-            card={card}
-            handleUpdateCard={handleUpdateCard}
-          />
-        ))}
+        {cards?.map((card) => {
+          card.columnTitle = columnTitle;
+          return (
+            <CardItem
+              key={card.cardId}
+              card={card}
+              handleUpdateCard={handleUpdateCard}
+            />
+          );
+        })}
       </Box>
     </Box>
   );

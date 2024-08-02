@@ -9,7 +9,6 @@ import AttachmentIcon from "@mui/icons-material/Attachment";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRef, useState } from "react";
-import MenuAction from "#/components/MenuAction/MenuAction";
 import ContentEditable from "react-contenteditable";
 import EditCard from "#/components/Modals/EditCard";
 
@@ -79,7 +78,12 @@ function CardItem({ card, handleUpdateCard }) {
         >
           <EditIcon />
         </IconButton>
-        <EditCard openModal={openModal} setOpenModal={setOpenModal}></EditCard>
+        {/* Edit card */}
+        <EditCard
+          card={card}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        ></EditCard>
       </CardContent>
       {showCardActions && (
         <CardActions

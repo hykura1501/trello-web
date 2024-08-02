@@ -122,7 +122,11 @@ function Column({
       </Box>
       {/* List card */}
       {cards.length > 0 && (
-        <ListCard cards={cards} handleUpdateCard={handleUpdateCard} />
+        <ListCard
+          columnTitle={column.title}
+          cards={cards}
+          handleUpdateCard={handleUpdateCard}
+        />
       )}
       {column.columnId === showCreatingCard ? (
         <Box

@@ -126,13 +126,13 @@ function BoardBar({ board }) {
           <Tooltip title="Phi Ho">
             <Avatar
               alt="Phi Ho"
-              src="https://i.pinimg.com/564x/63/9e/80/639e80599d84ef3adcfb8531fed2ac32.jpg"
+              src="/src/assets/bv.jpg"
             />
           </Tooltip>
           <Tooltip title="Phi Ho">
             <Avatar
               alt="Phi Ho"
-              src="https://i.pinimg.com/564x/ed/b4/40/edb440cde2b66e858644f445a0f8d4f1.jpg"
+              src="/src/assets/bv.jpg"
             />
           </Tooltip>
         </AvatarGroup>

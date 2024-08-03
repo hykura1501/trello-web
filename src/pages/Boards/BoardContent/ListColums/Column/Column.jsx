@@ -82,13 +82,6 @@ function Column({
       setCards([...cards]);
     }
   };
-  //add new attachment
-  const handleAddNewAttachment = async (body) => {
-    const data = await newAttachment(body);
-    if (data) {
-      console.log(data);
-    }
-  };
   return (
     <Box
       sx={{
@@ -144,7 +137,6 @@ function Column({
           columnTitle={column.title}
           cards={cards}
           handleUpdateCard={handleUpdateCard}
-          handleAddNewAttachment={handleAddNewAttachment}
         />
       )}
       {column.columnId === showCreatingCard ? (

@@ -13,13 +13,9 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useState, useRef } from "react";
 import AttachmentFile from "./AttachmentFile";
 
-function EditCard({
-  card,
-  openModal,
-  setOpenModal,
-  handleUpdateCard,
-  handleAddNewAttachment,
-}) {
+import { getAllAttachments, newAttachment } from "#/services/cardService";
+import { useEffect } from "react";
+function EditCard({ card, openModal, setOpenModal, handleUpdateCard }) {
   const [showBoxEditCard, setShowBoxEditCard] = useState(false);
   const contentCardRef = useRef();
   const handleUpdateDescription = () => {
@@ -41,6 +37,28 @@ function EditCard({
     setOpen(true);
   };
   ////
+
+  const [attachments, setAttachments] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAllAttachments({
+        boardId: card.boardId,
+        columnId: card.columnId,
+        cardId: card.cardId,
+      });
+      if (data) {
+        setAttachments(data);
+      }
+    };
+    fetchData();
+  }, []);
+  //handleAddNewAttachment
+  const handleAddNewAttachment = async (body) => {
+    const data = await newAttachment(body);
+    if (data) {
+      setAttachments([data, ...attachments]);
+    }
+  };
   return (
     <BoxModal openModal={openModal} setOpenModal={setOpenModal}>
       <Box sx={{ display: "flex", width: "100%" }}>
@@ -184,57 +202,83 @@ function EditCard({
               </Button>
             </Box>
             {/* Content of Attachment */}
-            <Box sx={{ ml: 5.5 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                }}
-              >
-                <img
-                  style={{ height: 80 }}
-                  src="https://trello.com/1/cards/66937c158ad2add888c66a3f/attachments/669484e249a7e6174270408b/download/image.png"
-                />
-                <Box sx={{ display: "flex", flexDirection: "column", py: 1 }}>
-                  <Typography
-                    sx={{ fontSize: "0.8rem", fontWeight: 800, color: "white" }}
-                    variant="h1"
+            <Box
+              sx={{ ml: 5.5, display: "flex", flexDirection: "column", gap: 2 }}
+            >
+              {attachments?.map((item, idx) => {
+                return (
+                  <Box
+                    key={idx}
+                    sx={{
+                      display: "flex",
+                      gap: 2,
+                    }}
                   >
-                    image.png
-                  </Typography>
-                  {/* Action of attachment */}
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <a href="" style={{ color: "white", fontSize: "0.8rem" }}>
-                      <span style={{ color: "white" }}>Comment</span>
-                    </a>
-                    <span>•</span>
-                    <a href="" style={{ color: "white", fontSize: "0.8rem" }}>
-                      <span style={{ color: "white" }}>Download</span>
-                    </a>
-                    <span>•</span>
-                    <a href="" style={{ color: "white", fontSize: "0.8rem" }}>
-                      <span style={{ color: "white" }}>Delete</span>
-                    </a>
-                    <span>•</span>
-                    <a href="" style={{ color: "white", fontSize: "0.8rem" }}>
-                      <span style={{ color: "white" }}>Edit</span>
-                    </a>
-                  </Box>
-                  {/* make cover of card */}
-                  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-                    <MedicalInformationIcon sx={{ color: "white" }} />
-                    <div
-                      style={{
-                        textDecoration: "underline",
-                        mt: 1,
-                        color: "white",
-                      }}
+                    <img style={{ height: 80 }} src={item.fileUrl} />
+                    <Box
+                      sx={{ display: "flex", flexDirection: "column", py: 1 }}
                     >
-                      Make cover
-                    </div>
+                      <Typography
+                        sx={{
+                          fontSize: "0.8rem",
+                          fontWeight: 800,
+                          color: "white",
+                        }}
+                        variant="h1"
+                      >
+                        image.png
+                      </Typography>
+                      {/* Action of attachment */}
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                      >
+                        <a
+                          href=""
+                          style={{ color: "white", fontSize: "0.8rem" }}
+                        >
+                          <span style={{ color: "white" }}>Comment</span>
+                        </a>
+                        <span>•</span>
+                        <a
+                          href=""
+                          style={{ color: "white", fontSize: "0.8rem" }}
+                        >
+                          <span style={{ color: "white" }}>Download</span>
+                        </a>
+                        <span>•</span>
+                        <a
+                          href=""
+                          style={{ color: "white", fontSize: "0.8rem" }}
+                        >
+                          <span style={{ color: "white" }}>Delete</span>
+                        </a>
+                        <span>•</span>
+                        <a
+                          href=""
+                          style={{ color: "white", fontSize: "0.8rem" }}
+                        >
+                          <span style={{ color: "white" }}>Edit</span>
+                        </a>
+                      </Box>
+                      {/* make cover of card */}
+                      <Box
+                        sx={{ display: "flex", gap: 1, alignItems: "center" }}
+                      >
+                        <MedicalInformationIcon sx={{ color: "white" }} />
+                        <div
+                          style={{
+                            textDecoration: "underline",
+                            mt: 1,
+                            color: "white",
+                          }}
+                        >
+                          Make cover
+                        </div>
+                      </Box>
+                    </Box>
                   </Box>
-                </Box>
-              </Box>
+                );
+              })}
             </Box>
           </Box>
           {/* Comment */}
@@ -440,9 +484,9 @@ function EditCard({
       </Box>
       {/* Attachment File */}
       <AttachmentFile
+        handleAddNewAttachment={handleAddNewAttachment}
         open={open}
         setOpen={setOpen}
-        handleAddNewAttachment={handleAddNewAttachment}
         card={card}
       />
     </BoxModal>

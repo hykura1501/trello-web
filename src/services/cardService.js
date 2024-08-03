@@ -43,3 +43,11 @@ export const newAttachment = async (body) => {
     console.log(error);
   }
 };
+export const getAllAttachments = async (body) => {
+  try {
+    const res = await httpRequest.post(`/card/attachment`, body);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -35,3 +35,11 @@ export const updateCard = async (body) => {
     console.log(error);
   }
 };
+export const newAttachment = async (body) => {
+  try {
+    const res = await httpRequest.post(`/card/attachment/new`, body);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

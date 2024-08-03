@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import CardItem from "./CardItem/CardItem";
-function ListCard({ columnTitle, cards, handleUpdateCard }) {
+function ListCard({ columnTitle, cards, handleUpdateCard, handleAddNewAttachment }) {
   return (
     <Box
       sx={{
@@ -34,6 +34,7 @@ function ListCard({ columnTitle, cards, handleUpdateCard }) {
               key={card.cardId}
               card={card}
               handleUpdateCard={handleUpdateCard}
+              handleAddNewAttachment={handleAddNewAttachment}
             />
           );
         })}

@@ -11,18 +11,36 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import { Editor } from "@tinymce/tinymce-react";
 import { useState, useRef } from "react";
+import AttachmentFile from "./AttachmentFile";
 
-function EditCard({ card, openModal, setOpenModal }) {
+function EditCard({
+  card,
+  openModal,
+  setOpenModal,
+  handleUpdateCard,
+  handleAddNewAttachment,
+}) {
   const [showBoxEditCard, setShowBoxEditCard] = useState(false);
   const contentCardRef = useRef();
-  const handleImageUpload = async function (blobInfo, success, failure) {
-    // let imageFile = new FormData();
-    console.log(blobInfo);
-    console.log(success);
-    console.log(failure);
-
-    // imageFile.append("files[]", blobInfo.blob());
+  const handleUpdateDescription = () => {
+    card.description = contentCardRef.current.getContent();
+    const body = {
+      boardId: card.boardId,
+      columnId: card.columnId,
+      cardId: card.cardId,
+      description: card.description,
+    };
+    handleUpdateCard(body);
+    setShowBoxEditCard(false);
   };
+
+  ///
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  ////
   return (
     <BoxModal openModal={openModal} setOpenModal={setOpenModal}>
       <Box sx={{ display: "flex", width: "100%" }}>
@@ -75,7 +93,7 @@ function EditCard({ card, openModal, setOpenModal }) {
               </Button>
             </Box>
             {/* Content of description */}
-            {showBoxEditCard ? (
+            {showBoxEditCard || !card.description ? (
               <Box sx={{ px: 4 }}>
                 <Editor
                   onInit={(_evt, editor) => (contentCardRef.current = editor)}
@@ -92,13 +110,16 @@ function EditCard({ card, openModal, setOpenModal }) {
                   }}
                   initialValue={card.description}
                 />
-                <Box sx={{ display: "flex", mt: 1.5, alignItems: "center", gap: 1.5 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    mt: 1.5,
+                    alignItems: "center",
+                    gap: 1.5,
+                  }}
+                >
                   <Button
-                    onClick={() => {
-                      card.description = contentCardRef.current.getContent();
-
-                      setShowBoxEditCard(false);
-                    }}
+                    onClick={handleUpdateDescription}
                     sx={{
                       color: "#28384d",
                       bgcolor: "#579dff",
@@ -157,6 +178,7 @@ function EditCard({ card, openModal, setOpenModal }) {
                     bgcolor: "#8295b5",
                   },
                 }}
+                onClick={handleClickOpen}
               >
                 Add
               </Button>
@@ -416,6 +438,13 @@ function EditCard({ card, openModal, setOpenModal }) {
           </Box>
         </Box>
       </Box>
+      {/* Attachment File */}
+      <AttachmentFile
+        open={open}
+        setOpen={setOpen}
+        handleAddNewAttachment={handleAddNewAttachment}
+        card={card}
+      />
     </BoxModal>
   );
 }

@@ -12,7 +12,7 @@ import { useRef, useState } from "react";
 import ContentEditable from "react-contenteditable";
 import EditCard from "#/components/Modals/EditCard";
 
-function CardItem({ card, handleUpdateCard }) {
+function CardItem({ card, handleUpdateCard, handleAddNewAttachment }) {
   const [cardTitle, setCardTitle] = useState(card?.title);
   const cardRef = useRef();
   //Change Title Card
@@ -83,6 +83,8 @@ function CardItem({ card, handleUpdateCard }) {
           card={card}
           openModal={openModal}
           setOpenModal={setOpenModal}
+          handleUpdateCard={handleUpdateCard}
+          handleAddNewAttachment={handleAddNewAttachment}
         ></EditCard>
       </CardContent>
       {showCardActions && (

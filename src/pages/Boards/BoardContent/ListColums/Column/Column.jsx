@@ -6,7 +6,12 @@ import DragHandleIcon from "@mui/icons-material/DragHandle";
 import { useEffect, useRef, useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { getAllCards, createCard, updateCard } from "#/services/cardService";
+import {
+  getAllCards,
+  createCard,
+  updateCard,
+  newAttachment,
+} from "#/services/cardService";
 import MenuAction from "#/components/MenuAction/MenuAction";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ContentEditable from "react-contenteditable";
@@ -63,12 +68,25 @@ function Column({
       titleRef.current.innerText = column?.title;
     }
   };
+  //handleUpdateCard
   const handleUpdateCard = async (body) => {
     const data = await updateCard(body);
     if (data) {
       const idx = cards.findIndex((card) => card.cardId === data.cardId);
-      cards[idx] = data;
+      if (data.description) {
+        cards[idx].description = data.description;
+      }
+      if (data.title) {
+        cards[idx].title = data.title;
+      }
       setCards([...cards]);
+    }
+  };
+  //add new attachment
+  const handleAddNewAttachment = async (body) => {
+    const data = await newAttachment(body);
+    if (data) {
+      console.log(data);
     }
   };
   return (
@@ -126,6 +144,7 @@ function Column({
           columnTitle={column.title}
           cards={cards}
           handleUpdateCard={handleUpdateCard}
+          handleAddNewAttachment={handleAddNewAttachment}
         />
       )}
       {column.columnId === showCreatingCard ? (

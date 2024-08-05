@@ -12,6 +12,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import { Editor } from "@tinymce/tinymce-react";
 import { useState, useRef } from "react";
 import AttachmentFile from "./AttachmentFile";
+import { saveAs } from "file-saver";
 
 import { getAllAttachments, newAttachment } from "#/services/cardService";
 import { useEffect } from "react";
@@ -166,12 +167,6 @@ function EditCard({ card, openModal, setOpenModal, handleUpdateCard }) {
               </Box>
             ) : (
               <Box sx={{ ml: 5.5 }}>
-                {/* <Typography sx={{ color: "white" }}>Content</Typography>
-                <img
-                  style={{ height: 300 }}
-                  src="https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-980x653.jpg"
-                />
-                 */}
                 <div
                   style={{ color: "white" }}
                   dangerouslySetInnerHTML={{ __html: card.description }}
@@ -226,54 +221,85 @@ function EditCard({ card, openModal, setOpenModal, handleUpdateCard }) {
                         }}
                         variant="h1"
                       >
-                        image.png
+                        {item.fileName}
                       </Typography>
                       {/* Action of attachment */}
                       <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          color: "white",
+                        }}
                       >
-                        <a
-                          href=""
-                          style={{ color: "white", fontSize: "0.8rem" }}
+                        <span
+                          style={{
+                            color: "white",
+                            fontSize: "0.8rem",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {}}
                         >
-                          <span style={{ color: "white" }}>Comment</span>
-                        </a>
+                          Comment
+                        </span>
                         <span>•</span>
-                        <a
-                          href=""
-                          style={{ color: "white", fontSize: "0.8rem" }}
+                        <span
+                          style={{
+                            color: "white",
+                            fontSize: "0.8rem",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            saveAs(item.fileUrl, item.fileName);
+                          }}
                         >
-                          <span style={{ color: "white" }}>Download</span>
-                        </a>
+                          Download
+                        </span>
                         <span>•</span>
-                        <a
-                          href=""
-                          style={{ color: "white", fontSize: "0.8rem" }}
+                        <span
+                          style={{
+                            color: "white",
+                            fontSize: "0.8rem",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {}}
                         >
-                          <span style={{ color: "white" }}>Delete</span>
-                        </a>
+                          Delete
+                        </span>
                         <span>•</span>
-                        <a
-                          href=""
-                          style={{ color: "white", fontSize: "0.8rem" }}
+                        <span
+                          style={{
+                            color: "white",
+                            fontSize: "0.8rem",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {}}
                         >
-                          <span style={{ color: "white" }}>Edit</span>
-                        </a>
+                          Edit
+                        </span>
                       </Box>
                       {/* make cover of card */}
                       <Box
-                        sx={{ display: "flex", gap: 1, alignItems: "center" }}
+                        sx={{ display: "flex", gap: 0.6, alignItems: "center" }}
                       >
-                        <MedicalInformationIcon sx={{ color: "white" }} />
-                        <div
+                        <MedicalInformationIcon
+                          sx={{ color: "white", height: "18px" }}
+                        />
+                        <a
+                          href="#"
                           style={{
                             textDecoration: "underline",
                             mt: 1,
                             color: "white",
+                            fontSize: "0.8rem",
                           }}
                         >
-                          Make cover
-                        </div>
+                          <span>Make cover</span>
+                        </a>
                       </Box>
                     </Box>
                   </Box>

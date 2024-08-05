@@ -11,7 +11,7 @@ import {
 
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { newAttachment } from "#/services/cardService";
+import { useEffect, useState } from "react";
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -24,6 +24,31 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 function AttachmentFile({ open, setOpen, card, handleAddNewAttachment }) {
+  const [selectedFile, setSelectedFile] = useState();
+  const [preview, setPreview] = useState();
+
+  // create a preview as a side effect, whenever selected file is changed
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
+
+  const onSelectFile = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    }
+    // I've kept this example simple by using the first image instead of multiple
+    setSelectedFile(e.target.files[0]);
+  };
   return (
     <Box>
       <Dialog
@@ -33,11 +58,11 @@ function AttachmentFile({ open, setOpen, card, handleAddNewAttachment }) {
           component: "form",
           onSubmit: async (event) => {
             event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const file = formJson.file;
+            // const formData = new FormData(event.currentTarget);
+            // const formJson = Object.fromEntries(formData.entries());
+            // const file = formJson.file;
             const body = new FormData();
-            body.append("file", file);
+            body.append("file", selectedFile);
             body.append("boardId", card.boardId);
             body.append("columnId", card.columnId);
             body.append("cardId", card.cardId);
@@ -46,21 +71,33 @@ function AttachmentFile({ open, setOpen, card, handleAddNewAttachment }) {
           },
         }}
       >
-        <DialogTitle>Attach</DialogTitle>
-        <DialogContent sx={{ width: "560px" }}>
+        <DialogTitle>Attachment</DialogTitle>
+        <DialogContent
+          sx={{ width: "560px", display: "flex", flexDirection: "column" }}
+        >
           <DialogContentText>
             Attach a file from your computer
           </DialogContentText>
-          <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-          >
-            Upload file
-            <VisuallyHiddenInput name="file" type="file" />
-          </Button>
+          <>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+              sx={{ width: "150px", my: 2 }}
+            >
+              Upload file
+              <VisuallyHiddenInput
+                name="file"
+                type="file"
+                onChange={onSelectFile}
+              />
+            </Button>
+          </>
+          {selectedFile && (
+            <img src={preview} style={{ height: 180, width: 180 }} />
+          )}
           <DialogContentText>Or paste a link</DialogContentText>
           <TextField
             margin="dense"
@@ -74,7 +111,7 @@ function AttachmentFile({ open, setOpen, card, handleAddNewAttachment }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button type="submit">Subscribe</Button>
+          <Button type="submit">Upload</Button>
         </DialogActions>
       </Dialog>
     </Box>

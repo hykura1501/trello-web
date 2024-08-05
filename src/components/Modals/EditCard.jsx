@@ -14,7 +14,11 @@ import { useState, useRef } from "react";
 import AttachmentFile from "./AttachmentFile";
 import { saveAs } from "file-saver";
 
-import { getAllAttachments, newAttachment } from "#/services/cardService";
+import {
+  getAllAttachments,
+  newAttachment,
+  deleteAttachment,
+} from "#/services/cardService";
 import { useEffect } from "react";
 function EditCard({ card, openModal, setOpenModal, handleUpdateCard }) {
   const [showBoxEditCard, setShowBoxEditCard] = useState(false);
@@ -58,6 +62,26 @@ function EditCard({ card, openModal, setOpenModal, handleUpdateCard }) {
     const data = await newAttachment(body);
     if (data) {
       setAttachments([data, ...attachments]);
+    }
+  };
+  //handleDeleteAttachment
+  const handleDeleteAttachment = async (fileUrl) => {
+    const code = await deleteAttachment({
+      data: {
+        boardId: card.boardId,
+        columnId: card.columnId,
+        cardId: card.cardId,
+        fileUrl: fileUrl,
+      },
+    });
+    if (code === 200) {
+      const idx = attachments.findIndex((item) => {
+        return item.fileUrl === fileUrl;
+      });
+      if (idx !== -1) {
+        attachments.splice(idx, 1);
+        setAttachments([...attachments]);
+      }
     }
   };
   return (
@@ -265,7 +289,7 @@ function EditCard({ card, openModal, setOpenModal, handleUpdateCard }) {
                             textDecoration: "underline",
                             cursor: "pointer",
                           }}
-                          onClick={() => {}}
+                          onClick={() => handleDeleteAttachment(item.fileUrl)}
                         >
                           Delete
                         </span>

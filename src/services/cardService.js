@@ -51,3 +51,11 @@ export const getAllAttachments = async (body) => {
     console.log(error);
   }
 };
+export const deleteAttachment = async (config) => {
+  try {
+    const res = await httpRequest._delete(`/card/attachment/delete`, config);
+    return res.code;
+  } catch (error) {
+    console.log(error);
+  }
+};

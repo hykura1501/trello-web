@@ -34,7 +34,9 @@ function Register() {
   };
   const handleRegister = async () => {
     const data = await authServices.register(fields);
-    console.log(data);
+    if (data) {
+      window.location.href = "/board";
+    }
   };
   return (
     <Auth title={"Register to continue"}>

@@ -8,3 +8,12 @@ export const getBoard = async (boardId) => {
     console.log(error);
   }
 };
+
+export const createBoard = async (body, config) => {
+  try {
+    const res = await httpRequest.post(`/board/new`, body, config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

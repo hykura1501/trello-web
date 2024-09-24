@@ -38,7 +38,7 @@ function Login() {
   const handleLogin = async () => {
     const data = await authServices.login(fields);
     if (data) {
-      window.location.href = "/";
+      window.location.href = "/board";
       setShowError("")
     } else {
       setShowError("Email or password is incorrect! Please try again.");

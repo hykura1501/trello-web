@@ -25,6 +25,13 @@ import CloseIcon from "@mui/icons-material/Close";
 function AppBar({ user }) {
   const [searchValue, setSearchValue] = useState("");
   const inputSearchRef = useRef();
+  const handleCreateBoard = () => {
+    if (user) {
+      console.log("user");
+    } else {
+      window.location.href = "/login";
+    }
+  };
   return (
     <Box
       sx={{
@@ -76,6 +83,7 @@ function AppBar({ user }) {
             <Button
               startIcon={<QueueIcon />}
               sx={{ height: 32, color: "white" }}
+              onClick={handleCreateBoard}
             >
               Create
             </Button>

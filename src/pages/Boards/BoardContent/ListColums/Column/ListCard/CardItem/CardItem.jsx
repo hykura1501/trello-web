@@ -79,12 +79,14 @@ function CardItem({ card, handleUpdateCard }) {
           <EditIcon />
         </IconButton>
         {/* Edit card */}
-        <EditCard
-          card={card}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-          handleUpdateCard={handleUpdateCard}
-        ></EditCard>
+        {openModal && (
+          <EditCard
+            card={card}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            handleUpdateCard={handleUpdateCard}
+          ></EditCard>
+        )}
       </CardContent>
       {showCardActions && (
         <CardActions
